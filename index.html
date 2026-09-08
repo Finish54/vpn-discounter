@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-i18n="meta.title">VPN Discounter — быстрый VPN от 100 ₽ в месяц</title>
+<meta name="description" data-i18n="meta.desc" data-i18n-attr="content" content="Безлимитный VPN без логов. Серверы по всему миру, до 5 устройств, оплата картой и криптой. Подключение за 2 минуты через Telegram.">
+<meta name="theme-color" content="#020402">
+<link rel="icon" href="assets/img/favicon-180.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="VPN Discounter">
+<meta property="og:description" data-i18n="meta.desc" data-i18n-attr="content" content="Безлимитный VPN без логов. От 100 ₽ в месяц.">
+<meta property="og:image" content="assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="assets/img/promo-last.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:ital,wght@1,700;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.hero__video,.hero__rays{display:none}</style></noscript>
+<script>
+  /* Страховка: если app.js не загрузился (404, блокировка, ошибка) —
+     через 2.5 с показываем весь контент, чтобы страница не осталась пустой.
+     Инлайновые стили GSAP имеют приоритет, так что рабочему сценарию это не мешает. */
+  setTimeout(function(){ document.body && document.body.classList.add("is-ready"); }, 2500);
+</script>
+</head>
+<body>
+
+<!-- ═══ фоновые слои ═══ -->
+<div class="fx-grid" aria-hidden="true"></div>
+<div class="fx-grain" aria-hidden="true"></div>
+<div class="fx-cursor" id="cursorGlow" aria-hidden="true"></div>
+
+<a class="skip-link" href="#hero" data-i18n="a11y.skip">К основному содержимому</a>
+
+<!-- ═══ ШАПКА ═══ -->
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="nav__logo" href="#hero" aria-label="VPN Discounter">
+      <img class="logo-mark" src="assets/img/logo-shield.png" alt="" width="26" height="31" decoding="async">
+      <span class="brand">VPN DISCOUNTER<sup>™</sup></span>
+    </a>
+
+    <nav class="nav__links" aria-label="main">
+      <a href="#servers" data-i18n="nav.servers">Серверы</a>
+      <a href="#services" data-i18n="nav.services">Сервисы</a>
+      <a href="#pricing" data-i18n="nav.pricing">Тарифы</a>
+      <a href="#install" data-i18n="nav.install">Установка</a>
+    </nav>
+
+    <div class="nav__right">
+      <div class="lang" role="group" aria-label="Language">
+        <button class="lang__btn is-on" data-lang="ru" type="button">RU</button>
+        <button class="lang__btn" data-lang="en" type="button">EN</button>
+      </div>
+      <a class="btn btn--sm js-cta" href="#" data-magnetic data-i18n="nav.cta">Подключить</a>
+      <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ 1. ГЕРОЙ ═══ -->
+<section class="hero" id="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <img class="hero__still" src="assets/img/promo-last.jpg" alt="">
+    <video class="hero__video" id="heroVideo" muted playsinline autoplay preload="auto"
+           poster="assets/img/promo-poster.jpg" disablepictureinpicture></video>
+    <canvas class="hero__rays" id="rays"></canvas>
+    <div class="hero__vignette"></div>
+  </div>
+
+  <div class="wrap hero__in">
+    <div class="hero__badge reveal">
+      <span class="dot"></span><span data-i18n="hero.badge">Работает в России · без логов · без рекламы</span>
+    </div>
+
+    <img class="logo-hero reveal" id="heroShield" src="assets/img/logo-shield.png"
+         alt="VPN Discounter" width="199" height="238" fetchpriority="high">
+
+    <h1 class="hero__h1 reveal">
+      <span class="ln" data-i18n="hero.h1a">Интернет без границ</span>
+      <span class="ln accent" data-i18n="hero.h1b">от 100 ₽ в месяц</span>
+    </h1>
+
+    <p class="hero__sub reveal" data-i18n="hero.sub">Безлимитная скорость, серверы в 14 странах и подключение за две минуты прямо из Telegram. Никаких приложений-шпионов и скрытых списаний.</p>
+
+    <div class="hero__cta reveal">
+      <a class="btn btn--lg js-cta" href="#" data-magnetic>
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><use href="#ic-tg"/></svg>
+        <span data-i18n="hero.cta">Подключить в Telegram</span>
+      </a>
+      <a class="btn btn--ghost btn--lg" href="#pricing" data-magnetic data-i18n="hero.cta2">Смотреть тарифы</a>
+    </div>
+
+    <!-- ── живой тумблер ── -->
+    <div class="vpnbox reveal" id="vpnBox">
+      <div class="vpnbox__row">
+        <div class="vpnbox__info">
+          <div class="vpnbox__label" data-i18n="toggle.label">Ваш IP-адрес сейчас</div>
+          <div class="vpnbox__ip" id="ipOut"><span class="skel">···.···.···.···</span></div>
+          <div class="vpnbox__geo" id="geoOut" data-i18n="toggle.detecting">Определяем местоположение…</div>
+        </div>
+
+        <button class="switch" id="vpnSwitch" type="button" role="switch" aria-checked="false" aria-label="VPN">
+          <span class="switch__track"><span class="switch__knob">
+            <svg viewBox="0 0 24 24" class="switch__lock" aria-hidden="true">
+              <rect class="lk-body" x="5" y="10.5" width="14" height="10.5" rx="3"/>
+              <path class="lk-shackle" d="M8.2 10.5V7.8a3.8 3.8 0 0 1 7.6 0v2.7"/>
+            </svg>
+          </span></span>
+        </button>
+      </div>
+
+      <div class="vpnbox__status" id="vpnStatus" data-state="off">
+        <span class="pulse"></span>
+        <span data-i18n="toggle.off">Соединение не защищено — провайдер видит трафик</span>
+      </div>
+    </div>
+
+    <ul class="hero__stats reveal">
+      <li><b data-count="14">14</b><span data-i18n="stats.countries">стран</span></li>
+      <li><b data-count="99" data-suffix=",9%">99,9%</b><span data-i18n="stats.uptime">аптайм</span></li>
+      <li><b data-count="0" data-text="0">0</b><span data-i18n="stats.logs">логов</span></li>
+      <li><b data-count="2" data-suffix=" мин" data-suffix-key="stats.minSuffix">2 мин</b><span data-i18n="stats.setup">на настройку</span></li>
+    </ul>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true"><span></span></div>
+</section>
+
+<!-- ═══ 2. КАРТА СЕРВЕРОВ ═══ -->
+<section class="sec sec--map" id="servers">
+  <div class="wrap">
+    <header class="shead reveal">
+      <span class="kicker" data-i18n="servers.kicker">Инфраструктура</span>
+      <h2 data-i18n="servers.h2">Серверы там, где вам нужно</h2>
+      <p data-i18n="servers.sub">Только собственные ноды на 10 Гбит/с. Наведите на точку, чтобы увидеть пинг.</p>
+    </header>
+
+    <div class="mapwrap reveal" id="mapWrap">
+      <canvas id="mapCanvas" aria-hidden="true"></canvas>
+      <svg class="map__links" id="mapLinks" aria-hidden="true"></svg>
+      <div class="map__pins" id="mapPins"></div>
+      <div class="map__tip" id="mapTip" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="chips reveal" id="serverChips"></div>
+  </div>
+</section>
+
+<!-- ═══ 3. СЕРВИСЫ ═══ -->
+<section class="sec sec--srv" id="services">
+  <div class="wrap">
+    <header class="shead reveal">
+      <span class="kicker" data-i18n="services.kicker">Доступ</span>
+      <h2 data-i18n="services.h2">Всё, что перестало открываться — открывается</h2>
+      <p data-i18n="services.sub">Без капчи, без «сервис недоступен в вашем регионе», без падения скорости.</p>
+    </header>
+
+    <div class="srvgrid" id="srvGrid">
+      <div class="srv" data-srv="netflix"><span class="srv__ic"><svg viewBox="0 0 48 48"><use href="#ic-netflix"/></svg></span><b>Netflix</b><i class="srv__cut"></i></div>
+      <div class="srv" data-srv="chatgpt"><span class="srv__ic"><svg viewBox="0 0 48 48"><use href="#ic-gpt"/></svg></span><b>ChatGPT</b><i class="srv__cut"></i></div>
+      <div class="srv" data-srv="instagram"><span class="srv__ic"><svg viewBox="0 0 48 48"><use href="#ic-ig"/></svg></span><b>Instagram</b><i class="srv__cut"></i></div>
+      <div class="srv" data-srv="whatsapp"><span class="srv__ic"><svg viewBox="0 0 48 48"><use href="#ic-wa"/></svg></span><b>WhatsApp</b><i class="srv__cut"></i></div>
+      <div class="srv" data-srv="spotify"><span class="srv__ic"><svg viewBox="0 0 48 48"><use href="#ic-sp"/></svg></span><b>Spotify</b><i class="srv__cut"></i></div>
+      <div class="srv" data-srv="telegram"><span class="srv__ic"><svg viewBox="0 0 48 48"><use href="#ic-tg48"/></svg></span><b>Telegram</b><i class="srv__cut"></i></div>
+      <div class="srv" data-srv="discord"><span class="srv__ic"><svg viewBox="0 0 48 48"><use href="#ic-dc"/></svg></span><b>Discord</b><i class="srv__cut"></i></div>
+      <div class="srv" data-srv="binance"><span class="srv__ic"><svg viewBox="0 0 48 48"><use href="#ic-bn"/></svg></span><b>Binance</b><i class="srv__cut"></i></div>
+    </div>
+    <p class="srvgrid__note reveal" data-i18n="services.note">…и любые другие сайты и приложения — мы не режем протоколы и не ограничиваем торренты.</p>
+  </div>
+</section>
+
+<!-- ═══ 4. ТАРИФЫ ═══ -->
+<section class="sec sec--price" id="pricing">
+  <div class="wrap">
+    <header class="shead reveal">
+      <span class="kicker" data-i18n="pricing.kicker">Тарифы</span>
+      <h2 data-i18n="pricing.h2">Честная цена без автосписаний</h2>
+      <p data-i18n="pricing.sub">Платите за месяц — продлеваете, когда захотите. Оплата картой, СБП или криптой.</p>
+    </header>
+
+    <!-- калькулятор устройств -->
+    <div class="calc reveal">
+      <div class="calc__head">
+        <span data-i18n="calc.label">Сколько устройств нужно?</span>
+        <output class="calc__out"><span id="calcPrice">100</span><span class="cur" data-i18n="calc.cur"> ₽/мес</span></output>
+      </div>
+      <input class="calc__range" id="calcRange" type="range" min="1" max="5" step="1" value="1"
+             aria-label="Количество устройств">
+      <div class="calc__ticks" id="calcTicks"></div>
+      <div class="calc__hint" id="calcHint" data-i18n="calc.hintStd">Тариф «Стандарт» — 1 устройство, 2 локации, безлимит</div>
+    </div>
+
+    <div class="plans">
+      <article class="plan reveal" data-plan="std">
+        <div class="plan__name" data-i18n="plan.std.name">Стандарт</div>
+        <div class="plan__price"><b>100</b><span data-i18n="plan.cur">₽</span><i data-i18n="plan.per">/мес</i></div>
+        <ul class="plan__list">
+          <li data-i18n="plan.std.f1">1 устройство</li>
+          <li data-i18n="plan.std.f2">2 локации на выбор</li>
+          <li data-i18n="plan.std.f3">Безлимитный трафик</li>
+          <li data-i18n="plan.std.f4">Поддержка в Telegram</li>
+        </ul>
+        <a class="btn btn--ghost js-cta" href="#" data-magnetic data-i18n="plan.cta">Выбрать</a>
+      </article>
+
+      <article class="plan reveal" data-plan="mob">
+        <div class="plan__name" data-i18n="plan.mob.name">Мобильный</div>
+        <div class="plan__price"><b>150</b><span data-i18n="plan.cur">₽</span><i data-i18n="plan.per">/мес</i></div>
+        <ul class="plan__list">
+          <li data-i18n="plan.mob.f1">3 устройства</li>
+          <li data-i18n="plan.mob.f2">50 ГБ трафика</li>
+          <li data-i18n="plan.mob.f3">Все мобильные платформы</li>
+          <li data-i18n="plan.mob.f4">Поддержка в Telegram</li>
+        </ul>
+        <a class="btn btn--ghost js-cta" href="#" data-magnetic data-i18n="plan.cta">Выбрать</a>
+      </article>
+
+      <article class="plan plan--top reveal" data-plan="prem">
+        <span class="plan__flag" data-i18n="plan.best">Выбирают чаще всего</span>
+        <div class="plan__name" data-i18n="plan.prem.name">Премиум</div>
+        <div class="plan__price"><b>270</b><span data-i18n="plan.cur">₽</span><i data-i18n="plan.per">/мес</i></div>
+        <ul class="plan__list">
+          <li data-i18n="plan.prem.f1">5 устройств</li>
+          <li data-i18n="plan.prem.f2">Все локации</li>
+          <li data-i18n="plan.prem.f3">Безлимитный трафик</li>
+          <li data-i18n="plan.prem.f4">Приоритетная поддержка</li>
+        </ul>
+        <a class="btn js-cta" href="#" data-magnetic data-i18n="plan.cta">Выбрать</a>
+      </article>
+    </div>
+
+    <p class="pay reveal">
+      <span data-i18n="pricing.pay">Принимаем:</span>
+      <b>ЮMoney</b><i>·</i><b>СБП / МИР</b><i>·</i><b>CryptoBot (USDT)</b>
+    </p>
+  </div>
+</section>
+
+<!-- ═══ 5. УСТАНОВКА ═══ -->
+<section class="sec sec--install" id="install">
+  <div class="wrap install__grid">
+
+    <div class="phonecol">
+      <div class="phone" id="phone">
+        <div class="phone__frame">
+          <div class="phone__notch"></div>
+          <div class="phone__screen" id="phoneScreen">
+
+            <div class="scr is-on" data-scr="0">
+              <div class="scr__bar"><span data-i18n="scr.store">App Store</span></div>
+              <div class="scr__app">
+                <div class="scr__appic">H</div>
+                <div><div class="scr__apptitle">Happ</div><div class="scr__appsub" data-i18n="scr.appsub">Proxy &amp; VPN client</div></div>
+                <div class="scr__get" data-i18n="scr.get">Загрузить</div>
+              </div>
+              <div class="scr__shots"><i></i><i></i><i></i></div>
+              <div class="scr__lines"><i></i><i></i><i style="width:60%"></i></div>
+            </div>
+
+            <div class="scr" data-scr="1">
+              <div class="scr__bar" data-i18n="scr.bot">VPN Discounter</div>
+              <div class="scr__msg" data-i18n="scr.msg">Подписка «Премиум» активна до 11.12.2027</div>
+              <div class="scr__btn" data-i18n="scr.add">+ Добавить подписку</div>
+              <div class="scr__toast" data-i18n="scr.toast">Конфигурация добавлена в Happ</div>
+            </div>
+
+            <div class="scr" data-scr="2">
+              <div class="scr__bar" data-i18n="scr.happ">Happ</div>
+              <div class="scr__power" id="scrPower">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9" /><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>
+              </div>
+              <div class="scr__state" data-i18n="scr.connected">Подключено · 8 мс</div>
+              <div class="scr__srv"><span></span><span data-i18n="scr.loc">Нидерланды · Амстердам</span></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="phone__glow" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="stepscol">
+      <header class="shead shead--left reveal">
+        <span class="kicker" data-i18n="install.kicker">Установка</span>
+        <h2 data-i18n="install.h2">Три шага. Две минуты.</h2>
+      </header>
+
+      <ol class="steps" id="steps">
+        <li class="step" data-step="0">
+          <span class="step__n">01</span>
+          <h3 data-i18n="step1.h">Установите приложение Happ</h3>
+          <p data-i18n="step1.p">Откройте страницу в App Store и установите Happ. Запустите, в окне разрешения VPN-конфигурации нажмите Allow и введите свой пароль.</p>
+          <div class="step__btns">
+            <a class="btn btn--ghost btn--sm" href="https://apps.apple.com/ru/app/happ-proxy-utility/id6504287215" target="_blank" rel="noopener">App&nbsp;Store (RU)</a>
+            <a class="btn btn--ghost btn--sm" href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215" target="_blank" rel="noopener">App&nbsp;Store (Global)</a>
+          </div>
+        </li>
+        <li class="step" data-step="1">
+          <span class="step__n">02</span>
+          <h3 data-i18n="step2.h">Добавьте подписку одной кнопкой</h3>
+          <p data-i18n="step2.p">Оплатите тариф в боте и нажмите «Добавить подписку» — приложение откроется само, конфигурация подтянется автоматически. Ключи вводить не нужно.</p>
+          <div class="step__btns"><a class="btn btn--sm js-cta" href="#" data-i18n="step2.cta">Открыть бота</a></div>
+        </li>
+        <li class="step" data-step="2">
+          <span class="step__n">03</span>
+          <h3 data-i18n="step3.h">Подключитесь</h3>
+          <p data-i18n="step3.p">В главном разделе нажмите большую кнопку включения в центре. Выберите сервер в списке — если скорость просела, просто переключитесь на другую локацию.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6. ФИНАЛЬНЫЙ CTA ═══ -->
+<section class="sec sec--final">
+  <div class="wrap final reveal">
+    <h2 data-i18n="final.h2">Первый месяц — 100 ₽. Дальше решаете вы.</h2>
+    <p data-i18n="final.p">Не подошло — просто не продлевайте. Мы не храним карту и не списываем автоматически.</p>
+    <a class="btn btn--lg js-cta" href="#" data-magnetic>
+      <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><use href="#ic-tg"/></svg>
+      <span data-i18n="final.cta">Подключить за 2 минуты</span>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ ФУТЕР ═══ -->
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__brand">
+      <a class="nav__logo" href="#hero">
+        <img class="logo-mark" src="assets/img/logo-shield.png" alt="" width="26" height="31" decoding="async">
+        <span class="brand">VPN DISCOUNTER<sup>™</sup></span>
+      </a>
+      <p data-i18n="foot.tag">Приватность — это не опция, а настройка по умолчанию.</p>
+    </div>
+
+    <nav class="foot__col" aria-label="product">
+      <h4 data-i18n="foot.product">Продукт</h4>
+      <a href="#pricing" data-i18n="nav.pricing">Тарифы</a>
+      <a href="#servers" data-i18n="nav.servers">Серверы</a>
+      <a href="#install" data-i18n="nav.install">Установка</a>
+      <a href="#services" data-i18n="nav.services">Сервисы</a>
+    </nav>
+
+    <nav class="foot__col" aria-label="support">
+      <h4 data-i18n="foot.help">Поддержка</h4>
+      <a class="js-support" href="#" data-i18n="foot.support">Написать в поддержку</a>
+      <a class="js-cta" href="#" data-i18n="foot.bot">Telegram-бот</a>
+      <a href="#" data-doc="terms" data-i18n="foot.terms">Пользовательское соглашение</a>
+      <a href="#" data-doc="privacy" data-i18n="foot.privacy">Политика конфиденциальности</a>
+    </nav>
+
+    <div class="foot__col">
+      <h4 data-i18n="foot.contacts">Контакты</h4>
+      <a class="js-cta" href="#">@VPNDISCOUNTERBOT</a>
+      <a class="js-support" href="#">@OnYouOn</a>
+      <a class="js-mail" href="#"><span class="js-mail-text">stritvpn@gmail.com</span></a>
+      <p class="foot__small" data-i18n="foot.hours">Отвечаем ежедневно, 10:00–23:00 МСК</p>
+    </div>
+  </div>
+
+  <div class="wrap foot__bottom">
+    <span>© <span id="year">2026</span> VPN Discounter™</span>
+    <span data-i18n="foot.legal">Сервис предназначен для защиты личных данных и не предназначен для нарушения законодательства.</span>
+  </div>
+</footer>
+
+<!-- модалка документов -->
+<div class="modal" id="docModal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal__box">
+    <button class="modal__x" id="docClose" type="button" aria-label="Закрыть">×</button>
+    <h3 id="docTitle"></h3>
+    <div class="modal__body" id="docBody"></div>
+  </div>
+</div>
+
+<!-- ═══ SVG-СПРАЙТ ═══ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="ic-tg" viewBox="0 0 24 24"><path d="M21.9 4.3 18.8 19c-.2 1-.9 1.3-1.7.8l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.8L18 5.9c.4-.3-.1-.5-.6-.2L6.7 12.6l-4.6-1.4c-1-.3-1-1 .2-1.5L20.6 2.6c.8-.3 1.6.2 1.3 1.7Z"/></symbol>
+  <symbol id="ic-tg48" viewBox="0 0 48 48"><path d="M43.8 8.6 37.6 38c-.5 2-1.9 2.5-3.5 1.6l-9.4-6.9-4.5 4.4c-.5.5-1 .9-2 .9l.7-9.6L36 13.8c.8-.7-.2-1.1-1.2-.4L13.4 26.1l-9.2-2.9c-2-.6-2.1-2 .4-3L41.2 5.3c1.7-.6 3.2.4 2.6 3.3Z"/></symbol>
+  <symbol id="ic-netflix" viewBox="0 0 48 48"><path d="M14 4h7.5l12.4 33.6V4H41v40h-7.3L21 9.6V44H14V4Z"/></symbol>
+  <symbol id="ic-gpt" viewBox="0 0 48 48"><path d="M24 4 41.3 14v20L24 44 6.7 34V14L24 4Zm0 5.2L11.2 16.6v14.8L24 38.8l12.8-7.4V16.6L24 9.2Z"/><path d="M24 15.4 33.4 21v11L24 37.6 14.6 32V21L24 15.4Zm0 4.6-5.4 3.2v6.4l5.4 3.2 5.4-3.2v-6.4L24 20Z"/></symbol>
+  <symbol id="ic-ig" viewBox="0 0 48 48"><rect x="6" y="6" width="36" height="36" rx="11" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="24" cy="24" r="8.5" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="34.2" cy="13.8" r="2.6"/></symbol>
+  <symbol id="ic-wa" viewBox="0 0 48 48"><path d="M24 5C13.5 5 5 13.5 5 24c0 3.4.9 6.6 2.5 9.4L5 43l9.9-2.4A19 19 0 1 0 24 5Zm0 4.4a14.6 14.6 0 1 1-7.6 27l-.7-.4-5.4 1.3 1.4-5.2-.5-.8A14.6 14.6 0 0 1 24 9.4Zm-6.6 7.3c-.4 0-1 .1-1.5.7-.5.6-2 1.9-2 4.6s2 5.3 2.3 5.7c.3.4 3.9 6.2 9.7 8.4 4.8 1.8 5.8 1.5 6.8 1.4 1-.1 3.3-1.3 3.7-2.6.5-1.3.5-2.4.3-2.6-.1-.2-.5-.4-1.1-.7l-3.8-1.9c-.5-.2-.9-.3-1.3.3l-1.8 2.3c-.3.4-.7.5-1.2.2-.6-.3-2.5-.9-4.7-2.9-1.7-1.6-2.9-3.5-3.2-4.1-.3-.6 0-.9.3-1.2l.9-1c.3-.4.4-.6.6-1 .2-.4.1-.8 0-1.1l-1.6-3.9c-.4-1-.8-.9-1.1-.9h-1.3Z"/></symbol>
+  <symbol id="ic-sp" viewBox="0 0 48 48"><path d="M24 4a20 20 0 1 0 0 40 20 20 0 0 0 0-40Zm9.3 28.9c-.4.6-1.1.8-1.7.4-4.7-2.9-10.6-3.5-17.6-1.9-.7.2-1.4-.3-1.5-1-.2-.7.3-1.4 1-1.5 7.6-1.7 14.2-1 19.4 2.2.6.4.8 1.2.4 1.8Zm2.5-5.5c-.5.8-1.5 1-2.2.5-5.4-3.3-13.5-4.3-19.8-2.4-.9.3-1.8-.2-2-1.1-.3-.9.2-1.8 1.1-2 7.2-2.2 16.2-1.1 22.4 2.7.7.5 1 1.5.5 2.3Zm.2-5.7c-6.4-3.8-17-4.2-23.2-2.3-1 .3-2.1-.3-2.4-1.3-.3-1 .3-2.1 1.3-2.4 7.1-2.2 18.8-1.7 26.2 2.7.9.6 1.2 1.8.7 2.7-.6.9-1.8 1.2-2.6.6Z"/></symbol>
+  <symbol id="ic-dc" viewBox="0 0 48 48"><path d="M38.6 11.4A32 32 0 0 0 30.6 9l-1 2a29 29 0 0 0-11.2 0l-1-2a32 32 0 0 0-8 2.4C4.3 20.6 3 29.4 3.6 38a32.4 32.4 0 0 0 9.9 5l2-3.4a21 21 0 0 1-3.3-1.6l.8-.6a23 23 0 0 0 20 0l.8.6a21 21 0 0 1-3.3 1.6l2 3.4a32.4 32.4 0 0 0 9.9-5c.8-10-1.3-18.7-5.8-26.6ZM17.4 32.6c-2 0-3.5-1.8-3.5-4s1.5-4 3.5-4 3.6 1.8 3.5 4c0 2.2-1.5 4-3.5 4Zm13.2 0c-2 0-3.5-1.8-3.5-4s1.5-4 3.5-4 3.6 1.8 3.5 4c0 2.2-1.5 4-3.5 4Z"/></symbol>
+  <symbol id="ic-bn" viewBox="0 0 48 48"><path d="m24 4 6.1 6.2L18 22.3l-6.1-6.1L24 4Zm12.2 12.3L42.3 22 24 40.3 5.7 22l6.1-6.1 12.2 12.2 12.2-11.8ZM6.1 24 12 30l-5.9 6-6-6 6-6Zm35.8 0 6 6-6 6-5.9-6 5.9-6ZM24 24.7l6.1 6.1L24 37l-6.1-6.2 6.1-6.1Z"/></symbol>
+</defs></svg>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="assets/js/i18n.js" defer></script>
+<script src="assets/js/worldmap.js" defer></script>
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>

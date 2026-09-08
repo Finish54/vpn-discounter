@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VPN Discounter — граф проекта</title>
+<style>
+  :root{--acid:#8BCD2F;--bg:#050803;--card:#0E1309;--line:rgba(139,205,47,.2);--mut:#8C9584}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:#EFF4E9;
+       font:400 16px/1.6 Manrope,Inter,-apple-system,"Segoe UI",Roboto,sans-serif;
+       background-image:radial-gradient(110% 60% at 50% -10%,rgba(139,205,47,.1),transparent 60%)}
+  .wrap{max-width:1240px;margin:0 auto;padding:44px 20px 80px}
+  h1{font-size:clamp(24px,4vw,38px);letter-spacing:-.03em;margin:0 0 6px}
+  h1 b{color:var(--acid)}
+  .lead{color:var(--mut);margin:0 0 30px}
+  h2{font-size:19px;margin:0;letter-spacing:-.01em}
+  .kick{display:inline-block;padding:4px 11px;border:1px solid var(--line);border-radius:99px;
+        font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--acid)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:22px;overflow:hidden}
+  .card__hd{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .card__note{color:var(--mut);font-size:14px;margin:0 0 16px}
+  .mermaid{background:transparent;overflow-x:auto}
+  .mermaid svg{max-width:100%;height:auto}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(139,205,47,.12);vertical-align:top}
+  th{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.12em}
+  td code{color:var(--acid);font-size:12.5px;background:rgba(139,205,47,.08);padding:2px 6px;border-radius:6px;
+          font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700}
+  .t-scroll{background:rgba(139,205,47,.14);color:var(--acid)}
+  .t-load{background:rgba(120,160,255,.14);color:#9BB8FF}
+  .t-user{background:rgba(255,190,80,.14);color:#FFCE7A}
+  .t-loop{background:rgba(255,255,255,.08);color:#C9D2C0}
+  footer{color:#5E6858;font-size:12.5px;text-align:center;padding-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>VPN <b>Discounter</b> — граф проекта</h1>
+  <p class="lead">Дерево файлов, путь пользователя от героя до оплаты и карта анимаций по триггерам.</p>
+
+  <!-- 1 -->
+  <div class="card">
+    <div class="card__hd"><span class="kick">01</span><h2>Дерево файлов</h2></div>
+    <p class="card__note">Статика без сборщика: заливается в корень хостинга «как есть». Внешние зависимости — только три CDN-скрипта и шрифт.</p>
+    <pre class="mermaid">
+flowchart LR
+  ROOT["📁 vpn-discounter/"] --> IDX["index.html<br/><i>вся разметка + SVG-спрайт</i>"]
+  ROOT --> RD["README.md"]
+  ROOT --> A["📁 assets/"]
+
+  A --> CSS["📁 css/<br/>style.css"]
+  A --> JS["📁 js/"]
+  A --> IMG["📁 img/"]
+  A --> VID["📁 video/"]
+
+  JS --> J1["i18n.js<br/><i>словарь RU/EN + список серверов</i>"]
+  JS --> J2["worldmap.js<br/><i>маска суши 150×44</i>"]
+  JS --> J3["app.js<br/><i>вся логика · TG_BOT в 1-й строке</i>"]
+
+  IMG --> I1["promo-last.jpg — стоп-кадр под видео"]
+  IMG --> I2["promo-poster.jpg — постер"]
+  IMG --> I3["og.jpg · logo-mark.png"]
+
+  VID --> V1["promo.mp4 — 1280×720, 1.2 МБ"]
+  VID --> V2["promo-mobile.mp4 — 720×406, 0.5 МБ"]
+
+  IDX -.-> CDN["CDN: GSAP · ScrollTrigger · Lenis · Manrope"]
+  J3 -.-> API["ipapi.co/json — определение IP и города"]
+
+  classDef f fill:#12160F,stroke:#8BCD2F55,color:#EFF4E9,rx:8,ry:8
+  classDef d fill:#0B1007,stroke:#8BCD2F,color:#8BCD2F,rx:8,ry:8
+  classDef x fill:#0B1007,stroke:#5E6858,color:#8C9584,rx:8,ry:8,stroke-dasharray:4 3
+  class ROOT,A,CSS,JS,IMG,VID d
+  class IDX,RD,J1,J2,J3,I1,I2,I3,V1,V2 f
+  class CDN,API x
+    </pre>
+  </div>
+
+  <!-- 2 -->
+  <div class="card">
+    <div class="card__hd"><span class="kick">02</span><h2>Поток пользователя: от героя до оплаты</h2></div>
+    <p class="card__note">Все зелёные ветки ведут в одну точку — Telegram-бота (константа <code>TG_BOT</code>). Оплата и выдача конфига происходят вне сайта.</p>
+    <pre class="mermaid">
+flowchart TD
+  L(["Заход на страницу"]) --> H["① Герой<br/>промо-ролик → лучи"]
+  H --> T{"Крутит тумблер VPN?"}
+  T -->|да| TON["IP схлопывается в маску<br/>замок защёлкивается<br/>лучи ×3.4"] --> S
+  T -->|нет| S["② Карта серверов<br/>14 локаций, пинг по ховеру"]
+  S --> SV["③ Сервисы<br/>иконки загораются по очереди"]
+  SV --> P["④ Тарифы"]
+  P --> C["Слайдер устройств<br/>1 → 5, цена бежит цифрами"]
+  C --> PICK{"Выбор тарифа"}
+  PICK -->|Стандарт 100 ₽| BOT
+  PICK -->|Мобильный 150 ₽| BOT
+  PICK -->|Премиум 270 ₽| BOT
+  P --> INS["⑤ Установка<br/>sticky-iPhone + 3 шага"]
+  INS --> ST1["Happ из App Store"] --> ST2["Добавить подписку"] --> ST3["Подключение"]
+  ST3 --> FIN["⑥ Финальный CTA"]
+  FIN --> BOT
+  H --> BOT
+  INS --> BOT
+
+  BOT(["🤖 Telegram-бот<br/>TG_BOT = https://t.me/YOUR_BOT"]) --> PAY["Оплата в боте<br/>ЮMoney · СБП/МИР · CryptoBot"]
+  PAY --> CFG["Конфиг уезжает в Happ<br/>одной кнопкой"] --> DONE(["Подключено"])
+
+  FOOT["⑦ Футер: поддержка, соглашение, политика"] -.-> BOT
+
+  classDef sec fill:#12160F,stroke:#8BCD2F55,color:#EFF4E9,rx:10,ry:10
+  classDef act fill:#0B1007,stroke:#8BCD2F,color:#8BCD2F,rx:10,ry:10
+  classDef goal fill:#8BCD2F,stroke:#8BCD2F,color:#08120A,rx:14,ry:14
+  class H,S,SV,P,INS,FIN,FOOT,ST1,ST2,ST3,TON,C sec
+  class L,PAY,CFG act
+  class BOT,DONE goal
+    </pre>
+  </div>
+
+  <!-- 3 -->
+  <div class="card">
+    <div class="card__hd"><span class="kick">03</span><h2>Анимации и их триггеры</h2></div>
+    <p class="card__note">Схема состояний героя — главная «эстафета» страницы.</p>
+    <pre class="mermaid">
+stateDiagram-v2
+  direction LR
+  [*] --> Poster: DOMContentLoaded
+  Poster --> Playing: autoplay muted playsinline
+  Playing --> Frozen: событие 'ended' (или таймаут 11 с)
+  Poster --> Frozen: автоплей заблокирован браузером
+  Frozen --> Rays: кроссфейд 1.2 с<br/>видео → canvas
+  Rays --> Rays: requestAnimationFrame ∞
+  Rays --> Fast: тумблер ON → speed 1 → 3.4
+  Fast --> Rays: тумблер OFF
+  [*] --> Static: prefers-reduced-motion<br/>видео и лучи выключены
+    </pre>
+
+    <table>
+      <thead><tr><th>Элемент</th><th>Триггер</th><th>Что происходит</th><th>Где</th></tr></thead>
+      <tbody>
+        <tr><td>Промо-ролик героя</td><td><span class="tag t-load">load</span></td><td>Один проигрыш, пауза на последнем кадре, кроссфейд в canvas-лучи</td><td><code>app.js §6</code></td></tr>
+        <tr><td>Лучи (canvas)</td><td><span class="tag t-loop">rAF ∞</span></td><td>170 лучей от центра, скорость плавно тянется к <code>rays.target</code></td><td><code>app.js §6</code></td></tr>
+        <tr><td>Щит-логотип</td><td><span class="tag t-loop">CSS ∞</span></td><td>Неоновый пульс drop-shadow, 3.4 с; скачок масштаба при ON</td><td><code>style.css</code></td></tr>
+        <tr><td>Тумблер VPN</td><td><span class="tag t-user">click</span></td><td>IP скремблится в <code>10.8.•••.•••</code>, дужка замка защёлкивается, статус зелёный, лучи ×3.4</td><td><code>app.js §7</code></td></tr>
+        <tr><td>IP и город</td><td><span class="tag t-load">fetch</span></td><td><code>ipapi.co/json</code>; при ошибке — «не удалось определить», страница работает</td><td><code>app.js §7</code></td></tr>
+        <tr><td>Точки на карте</td><td><span class="tag t-loop">CSS ∞</span></td><td>Пульсары со сдвигом фазы 0.19 с</td><td><code>style.css</code></td></tr>
+        <tr><td>Луч к серверу</td><td><span class="tag t-user">hover / focus</span></td><td>SVG-линия из центра рисуется через <code>stroke-dashoffset</code>, всплывает пинг</td><td><code>app.js §8</code></td></tr>
+        <tr><td>Иконки сервисов</td><td><span class="tag t-scroll">ScrollTrigger top 88%</span></td><td>Каскад 110 мс: серое → акцент, перечёркивание схлопывается</td><td><code>app.js §9</code></td></tr>
+        <tr><td>Цена в калькуляторе</td><td><span class="tag t-user">input</span></td><td>Бегущие цифры 0.55 с, подсветка соответствующего тарифа</td><td><code>app.js §10</code></td></tr>
+        <tr><td>iPhone-макет</td><td><span class="tag t-scroll">position: sticky</span></td><td>Залипает по центру вьюпорта на всю секцию</td><td><code>style.css</code></td></tr>
+        <tr><td>Экраны в макете</td><td><span class="tag t-scroll">ScrollTrigger top 62%</span></td><td>Шаг активируется → экран меняется (App Store → бот → Happ)</td><td><code>app.js §11</code></td></tr>
+        <tr><td>Reveal-блоки</td><td><span class="tag t-scroll">ScrollTrigger top 92%</span></td><td>opacity 0→1, y 26→0, once</td><td><code>app.js §12</code></td></tr>
+        <tr><td>Счётчики в герое</td><td><span class="tag t-scroll">ScrollTrigger top 96%</span></td><td>Инкремент 1.2 с до целевого числа</td><td><code>app.js §12</code></td></tr>
+        <tr><td>Магнитные кнопки</td><td><span class="tag t-user">pointermove</span></td><td>Смещение к курсору 0.28× / 0.38×, отключены на тач</td><td><code>app.js §5</code></td></tr>
+        <tr><td>Свечение за курсором</td><td><span class="tag t-loop">rAF</span></td><td>Радиальный градиент 520 px, лерп 0.12</td><td><code>app.js §5</code></td></tr>
+        <tr><td>Шум и сетка</td><td><span class="tag t-loop">CSS ∞</span></td><td>SVG-turbulence 7 с steps(6) + сетка 64 px под маской</td><td><code>style.css</code></td></tr>
+        <tr><td>Плавный скролл</td><td><span class="tag t-load">Lenis</span></td><td>duration 1.05, синхронизирован с тикером GSAP</td><td><code>app.js §3</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4 -->
+  <div class="card">
+    <div class="card__hd"><span class="kick">04</span><h2>Связи модулей</h2></div>
+    <pre class="mermaid">
+flowchart LR
+  I18N["i18n.js<br/>I18N · SERVERS"] --> APP
+  WM["worldmap.js<br/>WORLD_MASK"] --> APP
+  GSAPL["GSAP + ScrollTrigger"] --> APP
+  LEN["Lenis"] --> APP
+  APP["app.js"] --> DOM["index.html"]
+  APP --> CV1["canvas #rays"]
+  APP --> CV2["canvas #mapCanvas"]
+  APP --> LS[("localStorage<br/>vpnd_lang")]
+  APP --> NET["fetch ipapi.co"]
+  CSS["style.css<br/>токены --acid #8BCD2F"] --> DOM
+
+  classDef m fill:#12160F,stroke:#8BCD2F55,color:#EFF4E9,rx:9,ry:9
+  classDef c fill:#0B1007,stroke:#8BCD2F,color:#8BCD2F,rx:9,ry:9
+  class I18N,WM,GSAPL,LEN,CSS,DOM,CV1,CV2,LS,NET m
+  class APP c
+    </pre>
+  </div>
+
+  <footer>Схема сгенерирована вместе с лендингом · Mermaid рисуется локально в браузере</footer>
+</div>
+
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "base",
+    securityLevel: "loose",
+    themeVariables: {
+      background:"#0E1309", primaryColor:"#12160F", primaryTextColor:"#EFF4E9",
+      primaryBorderColor:"#8BCD2F", lineColor:"#8BCD2F", secondaryColor:"#0B1007",
+      tertiaryColor:"#0B1007", fontFamily:"Manrope, Inter, system-ui, sans-serif", fontSize:"14px",
+      clusterBkg:"#0B1007", clusterBorder:"#8BCD2F55", edgeLabelBackground:"#0E1309",
+      nodeTextColor:"#EFF4E9", labelBoxBkgColor:"#12160F", labelTextColor:"#EFF4E9"
+    },
+    flowchart:{ curve:"basis", padding:14, nodeSpacing:46, rankSpacing:56, htmlLabels:true }
+  });
+</script>
+</body>
+</html>
